@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import html
+import posixpath
 import re
 import subprocess
 from pathlib import Path
@@ -75,11 +76,8 @@ def replace_wikilinks(text: str, current_rel: Path) -> str:
         href = link_target(target)
         if not href:
             return html.escape(alias)
-        current_dir = current_rel.parent
-        source = Path(href)
-        final_href = Path(
-            *Path(current_dir / source).parts
-        ).relative_to(current_dir).as_posix()
+        depth = 0 if current_rel.parent == Path(".") else len(current_rel.parent.parts)
+        final_href = ("../" * depth) + Path(href).as_posix()
         return f'<a href="{html.escape(final_href)}">{html.escape(alias)}</a>'
 
     return re.sub(r"\[\[([^\]]+)\]\]", repl, text)
