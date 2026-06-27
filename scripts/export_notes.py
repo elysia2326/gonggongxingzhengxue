@@ -154,6 +154,94 @@ def nav_for(md_path: Path) -> str:
     return f'<p class="footer-note"><a href="../index.html">返回首页</a></p>'
 
 
+SKIP_INDEX_DIRS = {".github", "assets", "scripts"}
+
+
+def humanize_path(path: Path) -> str:
+    return " / ".join(part.replace("_", " ") for part in path.parts)
+
+
+def generate_directory_index(dir_path: Path) -> None:
+    rel = dir_path.relative_to(OUT_ROOT)
+    depth = len(rel.parts)
+    prefix = "../" * depth
+
+    subdirs = [
+        p for p in sorted(dir_path.iterdir(), key=lambda x: x.name)
+        if p.is_dir() and not p.name.startswith(".") and p.name not in SKIP_INDEX_DIRS
+    ]
+    files = [
+        p for p in sorted(dir_path.iterdir(), key=lambda x: x.name)
+        if p.is_file() and p.suffix == ".html" and p.name != "index.html"
+    ]
+
+    subdir_cards = ""
+    if subdirs:
+        cards = []
+        for subdir in subdirs:
+            count = sum(1 for _ in subdir.rglob("*.html") if _.name != "index.html")
+            cards.append(
+                f'''<a class="card" href="{html.escape(subdir.name)}/index.html">
+  <h3>{html.escape(subdir.name.replace("_", " "))}</h3>
+  <p>{count} 个页面</p>
+</a>'''
+            )
+        subdir_cards = "<h2 class=\"section-title\">子目录</h2><div class=\"grid\">" + "".join(cards) + "</div>"
+
+    file_list = ""
+    if files:
+        items = []
+        for file in files:
+            label = file.stem.replace("_", " ")
+            items.append(
+                f'<a class="mini" href="{html.escape(file.name)}"><strong>{html.escape(label)}</strong><span>页面</span></a>'
+            )
+        file_list = "<h2 class=\"section-title\">页面</h2><div class=\"list\">" + "".join(items) + "</div>"
+
+    if not subdir_cards and not file_list:
+        file_list = '<p class="muted">这里暂时没有可展示的 HTML 页面。</p>'
+
+    title = humanize_path(rel)
+    body = f"""<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{html.escape(title)}</title>
+  <link rel="stylesheet" href="{prefix}assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="crumbs"><a href="{prefix}index.html">首页</a> / {html.escape(title)}</div>
+      <div class="crumbs">目录页</div>
+    </div>
+    <div class="page">
+      <h1>{html.escape(title)}</h1>
+      <p class="muted">本目录包含 {len(files)} 个页面{f'，以及 {len(subdirs)} 个子目录' if subdirs else ''}。</p>
+      {subdir_cards}
+      {file_list}
+    </div>
+  </div>
+</body>
+</html>
+"""
+    write_text(dir_path / "index.html", body)
+
+
+def generate_indexes() -> None:
+    for dir_path in sorted(
+        [p for p in OUT_ROOT.rglob("*") if p.is_dir()],
+        key=lambda p: len(p.parts),
+    ):
+        rel = dir_path.relative_to(OUT_ROOT)
+        if rel.parts and rel.parts[0] in SKIP_INDEX_DIRS:
+            continue
+        if rel == Path("."):
+            continue
+        generate_directory_index(dir_path)
+
+
 def main() -> None:
     for md in SRC_ROOT.rglob("*.md"):
         rel = md.relative_to(SRC_ROOT)
@@ -162,6 +250,7 @@ def main() -> None:
         depth = 0 if rel.parent == Path(".") else len(rel.parts) - 1
         page = wrap_page(title, body_html, nav_for(md), rel_prefix="../" * depth)
         write_text(out_html, page)
+    generate_indexes()
 
 
 if __name__ == "__main__":
