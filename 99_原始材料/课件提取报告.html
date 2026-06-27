@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>课件提取报告</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="crumbs"><a href="../index.html">首页</a> / 课件提取报告</div>
+      <div class="crumbs">公共行政学期末复习</div>
+    </div>
+    <div class="page">
+      <p class="footer-note"><a href="../index.html">返回首页</a></p>
+      <div class="note-body">
+        <h1 id="课件提取报告">课件提取报告</h1>
+<h2 id="1-来源">1. 来源</h2>
+<ul>
+<li>原始压缩包：<code>D:\xwechat_files\wxid_d5nnug1wp2un22_d21d\msg\file\2026-06\公共行政课件.zip</code></li>
+<li>原始课件归档位置：<code>99_原始材料/课件原始文件</code></li>
+<li>Markdown 课件归档位置：<code>99_原始材料/课件分章</code></li>
+</ul>
+<h2 id="2-处理方式">2. 处理方式</h2>
+<ol type="1">
+<li>解压 ZIP，并过滤 <code>__MACOSX</code>、<code>.DS_Store</code>、<code>._*</code>、<code>~$*</code> 等无效文件。</li>
+<li>将老格式 <code>.ppt</code> 通过 LibreOffice 转换为 <code>.pptx</code>。</li>
+<li>使用 <code>python-pptx</code> 按幻灯片顺序提取文本，生成每章 Markdown。</li>
+<li>将 <code>.pptx</code> 通过 LibreOffice 转换为 PDF，再用 Poppler 将每页幻灯片渲染为 JPEG 图片。</li>
+<li>将每页幻灯片图片插入对应章节 Markdown 的 <code>## Slide X</code> 小节下方。</li>
+</ol>
+<p>说明：原计划使用 <code>convert-to-markdown</code> 技能脚本的 MarkItDown 路线，但当前 Python 环境缺少 <code>markitdown</code> 包，因此改用 <code>python-pptx</code> 做结构化文本提取。LibreOffice 转换时出现过环境提示，但 10 个 <code>.pptx</code> 中间文件均成功生成。</p>
+<h2 id="3-提取结果">3. 提取结果</h2>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th>原始文件</th>
+<th style="text-align: right;">幻灯片页数</th>
+<th style="text-align: right;">有可提取文字页</th>
+<th style="text-align: right;">图片/无文字页</th>
+<th style="text-align: right;">提取字符数</th>
+<th>Markdown 文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第01章</td>
+<td>第01章_课件_原始.ppt</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12563</td>
+<td><a href="99_原始材料/课件分章/第01章_课件.html">第01章_课件</a></td>
+</tr>
+<tr>
+<td>第02章</td>
+<td>第02章_课件_原始.ppt</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">8240</td>
+<td><a href="99_原始材料/课件分章/第02章_课件.html">第02章_课件</a></td>
+</tr>
+<tr>
+<td>第03章</td>
+<td>第03章_课件_原始.ppt</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">8142</td>
+<td><a href="99_原始材料/课件分章/第03章_课件.html">第03章_课件</a></td>
+</tr>
+<tr>
+<td>第04章</td>
+<td>第04章_课件_原始.ppt</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">5444</td>
+<td><a href="99_原始材料/课件分章/第04章_课件.html">第04章_课件</a></td>
+</tr>
+<tr>
+<td>第05章</td>
+<td>第05章_课件_原始.ppt</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">9331</td>
+<td><a href="99_原始材料/课件分章/第05章_课件.html">第05章_课件</a></td>
+</tr>
+<tr>
+<td>第06章</td>
+<td>第06章_课件_原始.ppt</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7241</td>
+<td><a href="99_原始材料/课件分章/第06章_课件.html">第06章_课件</a></td>
+</tr>
+<tr>
+<td>第07章</td>
+<td>第07章_课件_原始.ppt</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5580</td>
+<td><a href="99_原始材料/课件分章/第07章_课件.html">第07章_课件</a></td>
+</tr>
+<tr>
+<td>第08章</td>
+<td>第08章_课件_原始.ppt</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6989</td>
+<td><a href="99_原始材料/课件分章/第08章_课件.html">第08章_课件</a></td>
+</tr>
+<tr>
+<td>第09章</td>
+<td>第09章_课件_原始.pptx</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4980</td>
+<td><a href="99_原始材料/课件分章/第09章_课件.html">第09章_课件</a></td>
+</tr>
+<tr>
+<td>第10章</td>
+<td>第10章_课件_原始.ppt</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1772</td>
+<td><a href="99_原始材料/课件分章/第10章_课件.html">第10章_课件</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-幻灯片图片资源">4. 幻灯片图片资源</h2>
+<p>图片资源已按章节保存到：</p>
+<p><code>99_原始材料/课件分章/assets</code></p>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th style="text-align: right;">图片数量</th>
+<th>资源目录</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第01章</td>
+<td style="text-align: right;">114</td>
+<td><code>assets/第01章</code></td>
+</tr>
+<tr>
+<td>第02章</td>
+<td style="text-align: right;">106</td>
+<td><code>assets/第02章</code></td>
+</tr>
+<tr>
+<td>第03章</td>
+<td style="text-align: right;">82</td>
+<td><code>assets/第03章</code></td>
+</tr>
+<tr>
+<td>第04章</td>
+<td style="text-align: right;">64</td>
+<td><code>assets/第04章</code></td>
+</tr>
+<tr>
+<td>第05章</td>
+<td style="text-align: right;">84</td>
+<td><code>assets/第05章</code></td>
+</tr>
+<tr>
+<td>第06章</td>
+<td style="text-align: right;">80</td>
+<td><code>assets/第06章</code></td>
+</tr>
+<tr>
+<td>第07章</td>
+<td style="text-align: right;">62</td>
+<td><code>assets/第07章</code></td>
+</tr>
+<tr>
+<td>第08章</td>
+<td style="text-align: right;">72</td>
+<td><code>assets/第08章</code></td>
+</tr>
+<tr>
+<td>第09章</td>
+<td style="text-align: right;">47</td>
+<td><code>assets/第09章</code></td>
+</tr>
+<tr>
+<td>第10章</td>
+<td style="text-align: right;">14</td>
+<td><code>assets/第10章</code></td>
+</tr>
+</tbody>
+</table>
+<p>每个课件 Markdown 文件中，图片已插入到对应 <code>## Slide X</code> 标题下方，格式如：</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="al">![第01章 Slide 001](assets/第01章/slide-001.jpg)</span></span></code></pre></div>
+<h2 id="5-后续使用提醒">5. 后续使用提醒</h2>
+<ul>
+<li>章节整理时，课件 Markdown 是主要课件依据。</li>
+<li>若课件 Markdown 中某页出现 <code>[No extractable text on this slide]</code>，说明该页文字未能提取，但对应幻灯片图片已经保留在该页小节下方。</li>
+<li>如果需要核对动画、备注、隐藏对象或更高分辨率细节，应回看 <code>课件原始文件</code> 中对应 PPT。</li>
+<li>题库答案整理时，课件口径优先；如课件 Markdown 提取不完整，应回查原始课件。</li>
+</ul>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
